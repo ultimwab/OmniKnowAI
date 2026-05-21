@@ -28,35 +28,79 @@
             max-width: 1200px;
             width: 100%;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            max-height: 900px;
         }
 
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 50px 40px;
+            padding: 30px 40px;
             text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 2em;
+            margin: 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            flex: 1;
         }
 
-        header p {
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
             font-size: 1.2em;
-            opacity: 0.9;
+            transition: all 0.3s ease;
         }
 
-        .content {
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Page Navigation */
+        .page {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #homePage {
+            padding: 40px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #homePage .content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            padding: 50px 40px;
+            width: 100%;
+            max-width: 1000px;
         }
 
         @media (max-width: 768px) {
-            .content {
+            #homePage .content {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
@@ -70,6 +114,7 @@
 
         .feature-list {
             list-style: none;
+            text-align: left;
         }
 
         .feature-list li {
@@ -77,6 +122,8 @@
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
+            color: #333;
+            font-size: 1em;
         }
 
         .feature-list li:last-child {
@@ -89,16 +136,12 @@
             font-size: 1.2em;
         }
 
-        .feature-list li {
-            color: #333;
-            font-size: 1.05em;
-        }
-
         .button-group {
             display: flex;
             gap: 15px;
             margin-top: 30px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn {
@@ -139,37 +182,17 @@
         .code-block {
             background: #f5f5f5;
             border-left: 4px solid #667eea;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            margin: 20px 0;
+            margin: 10px 0;
             overflow-x: auto;
+            text-align: left;
         }
 
         .code-block code {
             font-family: 'Courier New', monospace;
             color: #333;
-            font-size: 0.95em;
-        }
-
-        .setup-steps {
-            background: #f9f9f9;
-            padding: 30px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
-        .setup-steps ol {
-            margin-left: 20px;
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .setup-steps li {
-            margin-bottom: 12px;
-        }
-
-        .setup-steps strong {
-            color: #667eea;
+            font-size: 0.9em;
         }
 
         .tech-stack {
@@ -177,6 +200,7 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
+            justify-content: center;
         }
 
         .tech-badge {
@@ -188,140 +212,744 @@
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
 
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+            text-align: left;
+        }
+
+        /* Chat Page Styles */
+        #chatPage {
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 30px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 15px 0;
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.assistant {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .message-timestamp {
+            font-size: 0.75em;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .loading-indicator {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            color: #667eea;
+        }
+
+        .loading-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .loading-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .chat-input-area {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-wrapper {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Settings Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input[type="range"] {
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .range-value {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #eee;
+        }
+
+        .btn-cancel:hover {
+            background: #eee;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
         footer {
             background: #f5f5f5;
-            padding: 30px 40px;
+            padding: 15px 30px;
             text-align: center;
             color: #666;
             border-top: 1px solid #eee;
+            font-size: 0.9em;
         }
 
         footer p {
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
-        .highlight {
-            background: #fff3cd;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #ffc107;
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #999;
         }
 
-        .highlight strong {
-            color: #856404;
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
         }
 
-        .chat-demo {
-            background: #1e1e1e;
-            color: #00ff00;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-            margin-top: 20px;
-            border: 1px solid #667eea;
-        }
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+                flex-wrap: wrap;
+            }
 
-        .chat-demo p {
-            margin: 8px 0;
-        }
+            header h1 {
+                font-size: 1.5em;
+                width: 100%;
+                margin-bottom: 10px;
+            }
 
-        .user {
-            color: #00d4ff;
-        }
+            .message-content {
+                max-width: 85%;
+            }
 
-        .assistant {
-            color: #00ff00;
-        }
+            .chat-input-area {
+                padding: 15px;
+            }
 
-        .icon {
-            display: inline-block;
-            margin-right: 10px;
+            .modal-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🤖 OKA</h1>
-            <p>OmniKnowledge Assistance - Powered by Google Gemini</p>
-            <p style="margin-top: 10px; font-size: 0.95em;">An intelligent AI assistant for your knowledge needs</p>
+            <h1 id="headerTitle">🤖 OKA</h1>
+            <div class="header-buttons" id="headerButtons" style="display: none;">
+                <button class="header-btn" title="Settings" onclick="openSettings()">⚙️</button>
+                <button class="header-btn" title="Home" onclick="goHome()">🏠</button>
+                <button class="header-btn" title="Clear History" onclick="clearHistory()">🗑️</button>
+            </div>
         </header>
 
-        <div class="content">
-            <!-- Left Section -->
-            <div class="section">
-                <h2>✨ Features</h2>
-                <ul class="feature-list">
-                    <li>🧠 AI-Powered Responses</li>
-                    <li>💬 Interactive Chat Interface</li>
-                    <li>📝 Chat History Tracking</li>
-                    <li>🔒 Secure API Key Management</li>
-                    <li>⚙️ Customizable Settings</li>
-                    <li>🚀 Fast & Reliable</li>
-                    <li>📱 Command-Line Interface</li>
-                    <li>🎯 Context-Aware Conversations</li>
-                </ul>
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <div class="content">
+                <!-- Left Section -->
+                <div class="section">
+                    <h2>✨ Features</h2>
+                    <ul class="feature-list">
+                        <li>🧠 AI-Powered Responses</li>
+                        <li>💬 Interactive Chat Interface</li>
+                        <li>📝 Chat History Tracking</li>
+                        <li>🔒 Secure API Key Management</li>
+                        <li>⚙️ Customizable Settings</li>
+                        <li>🚀 Fast & Reliable</li>
+                        <li>🎯 Context-Aware Conversations</li>
+                        <li>📱 Responsive Design</li>
+                    </ul>
 
-                <div class="highlight">
-                    <strong>💡 Tip:</strong> OKA uses Google's Gemini AI model to provide intelligent, context-aware responses to your queries.
+                    <div class="highlight">
+                        <strong>💡 Tip:</strong> OKA uses Google's Gemini AI model to provide intelligent, context-aware responses to your queries.
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Google Gemini API</span>
+                        <span class="tech-badge">Open Source</span>
+                    </div>
                 </div>
 
-                <div class="tech-stack">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">Google Gemini API</span>
-                    <span class="tech-badge">CLI</span>
-                    <span class="tech-badge">Open Source</span>
+                <!-- Right Section -->
+                <div class="section">
+                    <h2>🚀 Quick Start</h2>
+                    <div class="button-group" style="flex-direction: column; width: 100%; margin-top: 0;">
+                        <button class="btn btn-primary" onclick="startChat()" style="width: 100%;">💬 Start Chat</button>
+                        <button class="btn btn-secondary" onclick="openSettings()" style="width: 100%;">⚙️ Configure Settings</button>
+                    </div>
+
+                    <div style="text-align: left; margin-top: 30px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">📋 Setup Instructions:</h3>
+                        <ol style="margin-left: 20px; color: #555; line-height: 1.8;">
+                            <li>Get a free API key from <a href="https://ai.google.dev" target="_blank" style="color: #667eea; text-decoration: none;">ai.google.dev</a></li>
+                            <li>Click "⚙️ Configure Settings" above</li>
+                            <li>Paste your Gemini API key in the settings</li>
+                            <li>Click "💬 Start Chat" to begin</li>
+                            <li>Type your questions and press Enter</li>
+                        </ol>
+                    </div>
+
+                    <div class="highlight" style="margin-top: 30px;">
+                        <strong>🔐 Security:</strong> Your API key is stored securely in your browser and never sent anywhere except to Google's Gemini API.
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Section -->
-            <div class="section">
-                <h2>🚀 Quick Start</h2>
-                
-                <div class="setup-steps">
-                    <ol>
-                        <li><strong>Get API Key:</strong> Visit <a href="https://ai.google.dev" target="_blank" style="color: #667eea; text-decoration: none;">ai.google.dev</a></li>
-                        <li><strong>Clone Repository:</strong>
-                            <div class="code-block"><code>git clone https://github.com/ultimwab/OmniKnowAI.git</code></div>
-                        </li>
-                        <li><strong>Install Dependencies:</strong>
-                            <div class="code-block"><code>pip install -r requirements.txt</code></div>
-                        </li>
-                        <li><strong>Configure .env:</strong>
-                            <div class="code-block"><code>cp .env.example .env<br/>GEMINI_API_KEY=your_key_here</code></div>
-                        </li>
-                        <li><strong>Run OKA:</strong>
-                            <div class="code-block"><code>python oka_assistant.py</code></div>
-                        </li>
-                    </ol>
-                </div>
+            <div class="button-group" style="position: absolute; bottom: 30px;">
+                <a href="https://github.com/ultimwab/oka" target="_blank" class="btn btn-primary">📂 GitHub</a>
+                <a href="https://github.com/ultimwab/oka/blob/feature/oka-assistant/README.md" target="_blank" class="btn btn-secondary">📖 Docs</a>
+            </div>
+        </div>
 
-                <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">💬 Example Chat</h3>
-                <div class="chat-demo">
-                    <p><span class="user">You:</span> What is machine learning?</p>
-                    <p><span class="assistant">OKA:</span> Machine learning is a subset of artificial...</p>
-                    <p style="margin-top: 10px;"><span class="user">You:</span> Tell me more about neural networks</p>
-                    <p><span class="assistant">OKA:</span> Neural networks are computational models...</p>
+        <!-- Chat Page -->
+        <div id="chatPage" class="page">
+            <div class="chat-container" id="chatContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">💬</div>
+                    <p>Start a conversation with OKA!</p>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        class="chat-input" 
+                        placeholder="Ask me anything... (Shift+Enter for new line)"
+                        onkeypress="handleInputKey(event)"
+                    >
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
 
-        <!-- Button Group -->
-        <div style="padding: 0 40px; margin-bottom: 30px;">
-            <div class="button-group">
-                <a href="https://github.com/ultimwab/OmniKnowAI" target="_blank" class="btn btn-primary">📂 View on GitHub</a>
-                <a href="https://github.com/ultimwab/OmniKnowAI/blob/main/README.md" target="_blank" class="btn btn-secondary">📖 Read Documentation</a>
-                <a href="https://github.com/ultimwab/OmniKnowAI/blob/feature/oka-assistant/CONTRIBUTING.md" target="_blank" class="btn btn-secondary">🤝 Contribute</a>
-            </div>
-        </div>
-
-        <footer>
-            <p><strong>OKA - OmniKnowledge Assistance</strong></p>
-            <p>Powered by Google Gemini | Open Source Project</p>
-            <p style="margin-top: 15px; color: #999;">© 2026 ultimwab. All rights reserved.</p>
+        <footer id="footer" style="display: none;">
+            <p><strong>OKA - OmniKnowledge Assistance</strong> | Powered by Google Gemini</p>
+            <p style="color: #999;">© 2026 ultimwab. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>⚙️ Settings</h2>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label for="apiKey">Google Gemini API Key:</label>
+                    <input type="password" id="apiKey" placeholder="Paste your API key here" required>
+                    <div class="error-message" id="apiKeyError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="modelSelect">AI Model:</label>
+                    <select id="modelSelect">
+                        <option value="gemini-2.0-flash">Gemini 2.0 Flash (Recommended)</option>
+                        <option value="gemini-pro">Gemini Pro</option>
+                        <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="temperature">Temperature: <span class="range-value" id="tempValue">0.7</span></label>
+                    <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" 
+                           oninput="document.getElementById('tempValue').textContent = this.value">
+                    <small style="color: #999; display: block; margin-top: 5px;">Lower = More focused, Higher = More creative</small>
+                </div>
+
+                <div id="settingsMessage"></div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeSettings()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Settings</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        const STATE = {
+            apiKey: localStorage.getItem('oka_api_key') || '',
+            model: localStorage.getItem('oka_model') || 'gemini-2.0-flash',
+            temperature: parseFloat(localStorage.getItem('oka_temperature')) || 0.7,
+            chatHistory: [],
+            currentPage: 'home',
+            isLoading: false
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChatHistory();
+            document.getElementById('settingsForm').addEventListener('submit', saveSettings);
+            if (STATE.apiKey) {
+                document.getElementById('apiKey').value = STATE.apiKey;
+            }
+            document.getElementById('modelSelect').value = STATE.model;
+            document.getElementById('temperature').value = STATE.temperature;
+        });
+
+        // Page Navigation
+        function goHome() {
+            showPage('home');
+        }
+
+        function startChat() {
+            if (!STATE.apiKey) {
+                alert('Please configure your API key first!');
+                openSettings();
+                return;
+            }
+            showPage('chat');
+        }
+
+        function showPage(pageName) {
+            STATE.currentPage = pageName;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName + 'Page').classList.add('active');
+
+            const headerBtns = document.getElementById('headerButtons');
+            const footer = document.getElementById('footer');
+            
+            if (pageName === 'chat') {
+                headerBtns.style.display = 'flex';
+                footer.style.display = 'block';
+                document.getElementById('headerTitle').textContent = '💬 Chat';
+                document.getElementById('chatInput').focus();
+            } else {
+                headerBtns.style.display = 'none';
+                footer.style.display = 'none';
+                document.getElementById('headerTitle').textContent = '🤖 OKA';
+            }
+        }
+
+        // Settings Management
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('apiKeyError').textContent = '';
+            document.getElementById('settingsMessage').textContent = '';
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function saveSettings(e) {
+            e.preventDefault();
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const model = document.getElementById('modelSelect').value;
+            const temperature = document.getElementById('temperature').value;
+
+            if (!apiKey) {
+                document.getElementById('apiKeyError').textContent = 'API Key is required!';
+                return;
+            }
+
+            STATE.apiKey = apiKey;
+            STATE.model = model;
+            STATE.temperature = parseFloat(temperature);
+
+            localStorage.setItem('oka_api_key', apiKey);
+            localStorage.setItem('oka_model', model);
+            localStorage.setItem('oka_temperature', temperature);
+
+            const msg = document.getElementById('settingsMessage');
+            msg.textContent = '✅ Settings saved successfully!';
+            msg.className = 'success-message';
+            msg.style.color = '#28a745';
+
+            setTimeout(() => {
+                closeSettings();
+            }, 1500);
+        }
+
+        // Chat Functions
+        function handleInputKey(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+
+            if (!message || STATE.isLoading) return;
+
+            if (!STATE.apiKey) {
+                alert('Please configure your API key first!');
+                return;
+            }
+
+            // Add user message
+            addMessageToChat('user', message);
+            input.value = '';
+
+            // Show loading indicator
+            STATE.isLoading = true;
+            document.getElementById('sendBtn').disabled = true;
+            addMessageToChat('assistant', '<div class="loading-indicator"><span></span><span></span><span></span></div>', true);
+
+            try {
+                // Get AI response
+                const response = await callGeminiAPI(message);
+                
+                // Remove loading indicator
+                document.querySelector('.loading-indicator')?.parentElement?.parentElement?.remove();
+                
+                // Add assistant response
+                addMessageToChat('assistant', response);
+                STATE.chatHistory.push({ role: 'assistant', content: response });
+                saveChatHistory();
+            } catch (error) {
+                // Remove loading indicator
+                document.querySelector('.loading-indicator')?.parentElement?.parentElement?.remove();
+                
+                console.error('Error:', error);
+                addMessageToChat('assistant', `❌ Error: ${error.message}`);
+            } finally {
+                STATE.isLoading = false;
+                document.getElementById('sendBtn').disabled = false;
+                document.getElementById('chatInput').focus();
+            }
+        }
+
+        async function callGeminiAPI(message) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${STATE.model}:generateContent?key=${STATE.apiKey}`;
+
+            // Build conversation context
+            const contents = STATE.chatHistory.map(msg => ({
+                role: msg.role === 'user' ? 'user' : 'model',
+                parts: [{ text: msg.content }]
+            }));
+
+            // Add current message
+            contents.push({
+                role: 'user',
+                parts: [{ text: message }]
+            });
+
+            const payload = {
+                contents: contents,
+                generationConfig: {
+                    temperature: STATE.temperature,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 2048
+                }
+            };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error?.message || `API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (!text) {
+                throw new Error('No response from API');
+            }
+
+            return text;
+        }
+
+        function addMessageToChat(role, content, isLoading = false) {
+            const container = document.getElementById('chatContainer');
+            
+            // Remove empty state
+            const emptyState = container.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (isLoading) {
+                contentDiv.innerHTML = content;
+            } else {
+                contentDiv.textContent = content;
+            }
+
+            messageDiv.appendChild(contentDiv);
+
+            if (!isLoading) {
+                const timestamp = document.createElement('div');
+                timestamp.className = 'message-timestamp';
+                timestamp.textContent = new Date().toLocaleTimeString();
+                messageDiv.appendChild(timestamp);
+            }
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+
+            // Add to history
+            if (!isLoading) {
+                STATE.chatHistory.push({ role, content });
+                saveChatHistory();
+            }
+        }
+
+        // History Management
+        function saveChatHistory() {
+            localStorage.setItem('oka_chat_history', JSON.stringify(STATE.chatHistory));
+        }
+
+        function loadChatHistory() {
+            const saved = localStorage.getItem('oka_chat_history');
+            if (saved) {
+                STATE.chatHistory = JSON.parse(saved);
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear chat history?')) {
+                STATE.chatHistory = [];
+                localStorage.removeItem('oka_chat_history');
+                document.getElementById('chatContainer').innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>Chat history cleared. Start a new conversation!</p></div>';
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target.id === 'settingsModal') {
+                closeSettings();
+            }
+        });
+
+        // ESC key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSettings();
+            }
+        });
+    </script>
 </body>
 </html>
