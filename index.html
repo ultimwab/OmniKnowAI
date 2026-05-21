@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKA - OmniKnowledge Assistance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 50px 40px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: "✨";
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .feature-list li {
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .setup-steps {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .setup-steps ol {
+            margin-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .setup-steps li {
+            margin-bottom: 12px;
+        }
+
+        .setup-steps strong {
+            color: #667eea;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .highlight strong {
+            color: #856404;
+        }
+
+        .chat-demo {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            margin-top: 20px;
+            border: 1px solid #667eea;
+        }
+
+        .chat-demo p {
+            margin: 8px 0;
+        }
+
+        .user {
+            color: #00d4ff;
+        }
+
+        .assistant {
+            color: #00ff00;
+        }
+
+        .icon {
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 OKA</h1>
+            <p>OmniKnowledge Assistance - Powered by Google Gemini</p>
+            <p style="margin-top: 10px; font-size: 0.95em;">An intelligent AI assistant for your knowledge needs</p>
+        </header>
+
+        <div class="content">
+            <!-- Left Section -->
+            <div class="section">
+                <h2>✨ Features</h2>
+                <ul class="feature-list">
+                    <li>🧠 AI-Powered Responses</li>
+                    <li>💬 Interactive Chat Interface</li>
+                    <li>📝 Chat History Tracking</li>
+                    <li>🔒 Secure API Key Management</li>
+                    <li>⚙️ Customizable Settings</li>
+                    <li>🚀 Fast & Reliable</li>
+                    <li>📱 Command-Line Interface</li>
+                    <li>🎯 Context-Aware Conversations</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>💡 Tip:</strong> OKA uses Google's Gemini AI model to provide intelligent, context-aware responses to your queries.
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Google Gemini API</span>
+                    <span class="tech-badge">CLI</span>
+                    <span class="tech-badge">Open Source</span>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="section">
+                <h2>🚀 Quick Start</h2>
+                
+                <div class="setup-steps">
+                    <ol>
+                        <li><strong>Get API Key:</strong> Visit <a href="https://ai.google.dev" target="_blank" style="color: #667eea; text-decoration: none;">ai.google.dev</a></li>
+                        <li><strong>Clone Repository:</strong>
+                            <div class="code-block"><code>git clone https://github.com/ultimwab/OmniKnowAI.git</code></div>
+                        </li>
+                        <li><strong>Install Dependencies:</strong>
+                            <div class="code-block"><code>pip install -r requirements.txt</code></div>
+                        </li>
+                        <li><strong>Configure .env:</strong>
+                            <div class="code-block"><code>cp .env.example .env<br/>GEMINI_API_KEY=your_key_here</code></div>
+                        </li>
+                        <li><strong>Run OKA:</strong>
+                            <div class="code-block"><code>python oka_assistant.py</code></div>
+                        </li>
+                    </ol>
+                </div>
+
+                <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">💬 Example Chat</h3>
+                <div class="chat-demo">
+                    <p><span class="user">You:</span> What is machine learning?</p>
+                    <p><span class="assistant">OKA:</span> Machine learning is a subset of artificial...</p>
+                    <p style="margin-top: 10px;"><span class="user">You:</span> Tell me more about neural networks</p>
+                    <p><span class="assistant">OKA:</span> Neural networks are computational models...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button Group -->
+        <div style="padding: 0 40px; margin-bottom: 30px;">
+            <div class="button-group">
+                <a href="https://github.com/ultimwab/OmniKnowAI" target="_blank" class="btn btn-primary">📂 View on GitHub</a>
+                <a href="https://github.com/ultimwab/OmniKnowAI/blob/main/README.md" target="_blank" class="btn btn-secondary">📖 Read Documentation</a>
+                <a href="https://github.com/ultimwab/OmniKnowAI/blob/feature/oka-assistant/CONTRIBUTING.md" target="_blank" class="btn btn-secondary">🤝 Contribute</a>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>OKA - OmniKnowledge Assistance</strong></p>
+            <p>Powered by Google Gemini | Open Source Project</p>
+            <p style="margin-top: 15px; color: #999;">© 2026 ultimwab. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
